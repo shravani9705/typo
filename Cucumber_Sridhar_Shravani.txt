@@ -1,0 +1,71 @@
+Using the default profile...
+Feature: Create Categories
+  As a blog administrator
+  In order to share my thoughts with the world
+  I want to be able to add categories to my blog
+
+  Background:                            # features/create&edit_categories.feature:6
+    Given the blog is set up             # features/step_definitions/web_steps.rb:46
+    And I am logged into the admin panel # features/step_definitions/web_steps.rb:70
+
+  Scenario: Successfully create and edit categories       # features/create&edit_categories.feature:10
+    Given I am on the new categories page                 # features/step_definitions/web_steps.rb:114
+    When I fill in "category_name" with "Foobar"          # features/step_definitions/web_steps.rb:146
+    And I fill in "category_keywords" with "Lorem Ipsum"  # features/step_definitions/web_steps.rb:146
+    And I fill in "category_permalink" with "GG"          # features/step_definitions/web_steps.rb:146
+    And I fill in "category_description" with "desc"      # features/step_definitions/web_steps.rb:146
+    And I press "Save"                                    # features/step_definitions/web_steps.rb:130
+    Then I should see "Foobar"                            # features/step_definitions/web_steps.rb:236
+    Then I should see "Lorem Ipsum"                       # features/step_definitions/web_steps.rb:236
+    Then I should see "GG"                                # features/step_definitions/web_steps.rb:236
+    Then I should see "desc"                              # features/step_definitions/web_steps.rb:236
+    Then I follow "Foobar"                                # features/step_definitions/web_steps.rb:138
+    When I fill in "category_name" with "Foobar1"         # features/step_definitions/web_steps.rb:146
+    And I fill in "category_keywords" with "Lorem Ipsum1" # features/step_definitions/web_steps.rb:146
+    And I fill in "category_permalink" with "GG1"         # features/step_definitions/web_steps.rb:146
+    And I fill in "category_description" with "desc1"     # features/step_definitions/web_steps.rb:146
+    And I press "Save"                                    # features/step_definitions/web_steps.rb:130
+    Then I should see "Foobar1"                           # features/step_definitions/web_steps.rb:236
+    Then I should see "Lorem Ipsum1"                      # features/step_definitions/web_steps.rb:236
+    Then I should see "GG1"                               # features/step_definitions/web_steps.rb:236
+    Then I should see "desc1"                             # features/step_definitions/web_steps.rb:236
+
+Feature: Create Blog
+  As an author
+  In order to gift my thoughts to the world
+  I want to create a blog
+
+  Scenario: Create blog page shown      # features/create_blog.feature:6
+    Given I am on the home page         # features/step_definitions/web_steps.rb:114
+    Then I should see "Welcome"         # features/step_definitions/web_steps.rb:236
+    And I should see "My Shiny Weblog!" # features/step_definitions/web_steps.rb:236
+
+  Scenario: Create blog page not shown when blog created # features/create_blog.feature:11
+    Given the blog is set up                             # features/step_definitions/web_steps.rb:46
+    When I am on the home page                           # features/step_definitions/web_steps.rb:114
+    Then I should not see "My Shiny Weblog!"             # features/step_definitions/web_steps.rb:272
+    And I should see "Teh Blag"                          # features/step_definitions/web_steps.rb:236
+
+Feature: Write Articles
+  As a blog administrator
+  In order to share my thoughts with the world
+  I want to be able to add articles to my blog
+
+  Background:                            # features/write_article.feature:6
+    Given the blog is set up             # features/step_definitions/web_steps.rb:46
+    And I am logged into the admin panel # features/step_definitions/web_steps.rb:70
+
+  Scenario: Successfully write articles                                  # features/write_article.feature:10
+    Given I am on the new article page                                   # features/step_definitions/web_steps.rb:114
+    When I fill in "article_title" with "Foobar"                         # features/step_definitions/web_steps.rb:146
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum" # features/step_definitions/web_steps.rb:146
+    And I press "Publish"                                                # features/step_definitions/web_steps.rb:130
+    Then I should be on the admin content page                           # features/step_definitions/web_steps.rb:486
+    When I go to the home page                                           # features/step_definitions/web_steps.rb:122
+    Then I should see "Foobar"                                           # features/step_definitions/web_steps.rb:236
+    When I follow "Foobar"                                               # features/step_definitions/web_steps.rb:138
+    Then I should see "Lorem Ipsum"                                      # features/step_definitions/web_steps.rb:236
+
+4 scenarios (4 passed)
+40 steps (40 passed)
+0m3.701s
